@@ -1,4 +1,5 @@
 from flask import Flask, request, url_for, send_from_directory, render_template
+from flask_basicauth import BasicAuth
 import os
 from datetime import datetime
 import sys
@@ -7,18 +8,30 @@ app = Flask(__name__)
 
 UPLOAD_FOLDER = 'uploads'
 WEB_ROOT = '127.0.0.1'
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "password"
+basic_auth = BasicAuth(app)
 
 if len(sys.argv) > 1:
     WEB_ROOT = sys.argv[1]
 
+if len(sys.argv) > 2:
+    ADMIN_USERNAME = sys.argv[2]
+
+if len(sys.argv) > 3:
+    ADMIN_PASSWORD = sys.argv[3]
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['WEB_ROOT'] = WEB_ROOT
+app.config['BASIC_AUTH_USERNAME'] = ADMIN_USERNAME
+app.config['BASIC_AUTH_PASSWORD'] = ADMIN_PASSWORD
 
 # Ensure the 'uploads' folder exists
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 @app.route('/')
+@basic_auth.required
 def index():
     images = get_images()
     return render_template('index.html', images=images)
