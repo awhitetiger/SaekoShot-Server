@@ -6,14 +6,10 @@ import sys
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'uploads'
-WEB_ROOT = '127.0.0.1:5000'
+WEB_ROOT = '127.0.0.1'
 
-# Check if command-line arguments are provided
 if len(sys.argv) > 1:
-    UPLOAD_FOLDER = sys.argv[1]
-
-if len(sys.argv) > 2:
-    WEB_ROOT = sys.argv[2]
+    WEB_ROOT = sys.argv[1]
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['WEB_ROOT'] = WEB_ROOT
