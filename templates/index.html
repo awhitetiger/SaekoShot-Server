@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Image Gallery</title>
+    <style>
+        body {
+            background-color: #1e1e1e; /* Dark background color */
+            color: #ffffff; /* Light text color */
+        }
+
+        .card {
+            height: 100%;
+            background-color: #2c2c2c; /* Dark card background color */
+            color: #ffffff; /* Light text color for cards */
+        }
+
+        .card-img-top {
+            object-fit: cover;
+            height: 200px; /* Set the height of the preview image */
+        }
+    </style>
+</head>
+<body>
+<center><h1>Screenshots</h1></center>
+<div class="container mt-5">
+    <div class="row">
+        {% for image in images %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ image.path }}" class="card-img-top" alt="Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Timestamp: {{ image.timestamp }}</h5>
+                        <a href="{{ image.url }}" class="btn btn-primary" target="_blank">View Screenshot</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>
