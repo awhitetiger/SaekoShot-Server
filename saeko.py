@@ -10,6 +10,8 @@ UPLOAD_FOLDER = 'uploads'
 WEB_ROOT = '127.0.0.1'
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "password"
+API_KEY = "123"
+
 basic_auth = BasicAuth(app)
 
 if len(sys.argv) > 1:
@@ -21,8 +23,12 @@ if len(sys.argv) > 2:
 if len(sys.argv) > 3:
     ADMIN_PASSWORD = sys.argv[3]
 
+if len(sys.argv) > 4:
+    API_KEY = sys.argv[4]
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['WEB_ROOT'] = WEB_ROOT
+app.config['API_KEY'] = API_KEY
 app.config['BASIC_AUTH_USERNAME'] = ADMIN_USERNAME
 app.config['BASIC_AUTH_PASSWORD'] = ADMIN_PASSWORD
 
@@ -40,8 +46,12 @@ def index():
 def upload():
     if 'image' not in request.files:
         return "no file part"
-    
+
     file = request.files['image']
+    data = request.form['api_key']
+
+    if data != API_KEY:
+        return "Invalid API Key!"
 
     if file:
         filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
