@@ -18,6 +18,10 @@ if len(sys.argv) > 2:
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['WEB_ROOT'] = WEB_ROOT
 
+# Ensure the 'uploads' folder exists
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
 @app.route('/')
 def index():
     images = get_images()
@@ -39,7 +43,6 @@ def upload():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
 
 def get_images():
     images = []
