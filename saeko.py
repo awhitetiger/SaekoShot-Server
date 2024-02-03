@@ -61,4 +61,4 @@ def convert_timestamp(timestamp):
     return dt_object.strftime('%Y-%m-%d %H:%M:%S')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80, debug=False)
