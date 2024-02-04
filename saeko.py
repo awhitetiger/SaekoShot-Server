@@ -42,6 +42,11 @@ def index():
     images = get_images()
     return render_template('index.html', images=images)
 
+@app.route('/manual')
+@basic_auth.required
+def manUpload():
+    return render_template('manual-upload.html', api_key=API_KEY)
+
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'image' not in request.files:
